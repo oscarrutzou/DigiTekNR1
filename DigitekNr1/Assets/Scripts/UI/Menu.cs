@@ -4,10 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class Menu : MonoBehaviour
 {
+    //Til point
+    //Henter den specielle Tekst pakke.
+    public TextMeshProUGUI scoreText;
+    //Til den nuværende score
+    [HideInInspector]
+    public int currentScore;
+
+    //Til timeren
+    bool timerActive = false;
+    float currentTime = 0;
+    public TextMeshProUGUI timerLabel;
+
+    //Til liv
+    public TextMeshProUGUI lifeText;
+    [SerializeField] int currentLife = 100;
+
 
     [SerializeField] private AudioMixer audioMixer;
 
@@ -72,5 +89,28 @@ public class Menu : MonoBehaviour
     #endregion
 
 
+    #region Update
+
+    //Indsæt det nye gem highscore fra UfoGame
+
+
+    //Denne bliver kaldt hver gang et våben rammer et IDamageAble
+    public void UpdateScore(int score)
+    {
+        //Tager den nuværende score og plusser den med scoren som lige er kommet.
+        currentScore += score;
+        //Sætter den nuværende score til tekst.
+        scoreText.text = "Point : " + currentScore.ToString();
+    }
+
+    //Bliver kaldt når spilleren mister noget af deres liv
+    public void UpdateLife(int life)
+    {
+        //Fjerner liv fra det nuværende liv.
+        currentLife -= life;
+        //Sætter den nuværende liv til tekst.
+        lifeText.text = " Life : " + currentLife.ToString();
+    }
+    #endregion
 
 }

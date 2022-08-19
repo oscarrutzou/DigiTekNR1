@@ -256,6 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8449ec9da3a494ca3df5446b4bc598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToAttack: 1
+  timer: 0
   leftWhipObject: {fileID: 844866072}
   rightWhipObject: {fileID: 1148539369}
 --- !u!1 &185792907
@@ -47895,6 +47897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 844866073}
   - component: {fileID: 844866074}
+  - component: {fileID: 844866075}
   m_Layer: 0
   m_Name: WhipLeft
   m_TagString: Untagged
@@ -47969,6 +47972,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &844866075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844866072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24b7f0234cfa274eb4b975c94f641c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeAlive: 0.3
+  timer: 0
 --- !u!1 &1060698975
 GameObject:
   m_ObjectHideFlags: 0
@@ -48041,6 +48058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148539370}
   - component: {fileID: 1148539371}
+  - component: {fileID: 1148539372}
   m_Layer: 0
   m_Name: WhipRight
   m_TagString: Untagged
@@ -48115,6 +48133,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1148539372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148539369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24b7f0234cfa274eb4b975c94f641c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeAlive: 0.3
+  timer: 0
 --- !u!1 &1664999786
 GameObject:
   m_ObjectHideFlags: 0
@@ -48316,6 +48348,9 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   movementInput: {x: 0, y: 0}
+  lastXInput: 0
+  lastYInput: 0
+  spriteRenderer: {fileID: 0}
 --- !u!50 &1709747220
 Rigidbody2D:
   serializedVersion: 4
@@ -48701,6 +48736,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 5363707473479782864, guid: 3de009aef1088314e98fae57fd926ffe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de009aef1088314e98fae57fd926ffe, type: 3}
@@ -48829,7 +48868,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5311369844066020528
 MonoBehaviour:
   m_ObjectHideFlags: 0

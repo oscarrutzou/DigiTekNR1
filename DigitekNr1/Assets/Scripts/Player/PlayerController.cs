@@ -11,9 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ContactFilter2D movementFilter;
 
     public Vector2 movementInput;
+    [HideInInspector] public float lastXInput;
+    [HideInInspector] public float lastYInput;
+
+
     private Rigidbody2D rb;
 
-    private SpriteRenderer spriteRenderer;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator animator;
 
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
@@ -50,6 +54,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("isMoving", false);
+        }
+
+        if (movementInput.x != 0)
+        {
+            lastXInput = movementInput.x;
+        }
+        else if (movementInput.y != 0)
+        {
+            lastYInput = movementInput.y;
         }
 
         if (movementInput.x < 0)
