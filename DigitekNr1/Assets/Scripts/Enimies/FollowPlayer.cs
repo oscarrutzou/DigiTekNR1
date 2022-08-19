@@ -9,7 +9,10 @@ public class FollowPlayer : MonoBehaviour
     [Header("Tranforms")]
     [SerializeField] Transform enemyGFX;
 
+
+    private GameObject targetGameObject;
     private Transform target;
+
 
     [Header("Physics")]
     [SerializeField] float activateDistance = 10f;
@@ -37,7 +40,10 @@ public class FollowPlayer : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
-        target = GameObject.FindWithTag("Player").transform;
+        targetGameObject = GameObject.FindWithTag("Player");
+        target = targetGameObject.transform;
+
+
         //currentTime = startingTime;
 
         //manager = GameObject.Find("AudioManager");
@@ -64,13 +70,29 @@ public class FollowPlayer : MonoBehaviour
                 //reachedEndOfPath = false;
             }
 
+
+            //For at finde direction hen til playeren.
             Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+
+            //Til at flippe side.
+            if (direction.x >= 0.01f)
+            {
+                enemyGFX.transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else if (direction.x <= -0.01f)
+            {
+                enemyGFX.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+
+            //Sætter velocity til rb
             rb.velocity = direction * speed * Time.deltaTime;
 
             //rb.AddForce(force);
 
+            //Finder distancen mellem spilleren og enemy.
             float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
+            //Laver nyt waypoint hvis den er under et bestemt tal.
             if (distance < nextWaypointDistance)
             {
                 currentWaypoint++;
@@ -78,25 +100,28 @@ public class FollowPlayer : MonoBehaviour
         }
         else
         {
+            //Sætter velocity til 0 når man ikke kan se spilleren.
+            rb.velocity = Vector2.zero;
+
             return;
         }
-
-
     }
 
 
-
+    //For at hjekke om spilleren er indenfor det område man har valgt.
     private bool TargetInDistance()
     {
         return Vector2.Distance(transform.position, target.position) < activateDistance;
     }
 
+    //Updater path hvis den er færdig og man er indefor rækkevide.
     void UpdatePath()
     {
         if (seeker.IsDone() && TargetInDistance())
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
+    //Kaldt når pathen er complete.
     void OnPathComplete(Path p)
     {
         if (!p.error)

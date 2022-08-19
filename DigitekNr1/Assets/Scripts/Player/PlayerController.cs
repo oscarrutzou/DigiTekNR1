@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float collisionOffset = 0.05f;
     [SerializeField] ContactFilter2D movementFilter;
 
-    private Vector2 movementInput;
+    public Vector2 movementInput;
     private Rigidbody2D rb;
 
     private SpriteRenderer spriteRenderer;
