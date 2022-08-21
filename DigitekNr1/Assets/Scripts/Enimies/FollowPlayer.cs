@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class FollowPlayer : MonoBehaviour
+public class FollowPlayer : MonoBehaviour, IDamageAble
 {
 
     [Header("Tranforms")]
     [SerializeField] Transform enemyGFX;
 
 
+    [Header("Stats")]
+    [SerializeField] int hp = 1000;
+    [SerializeField] int damage = 1;
+    [SerializeField] int experience_reward = 400;
+
+
     private GameObject targetGameObject;
     private Transform target;
+    private PlayerController playerController;
 
 
     [Header("Physics")]
@@ -42,6 +49,7 @@ public class FollowPlayer : MonoBehaviour
 
         targetGameObject = GameObject.FindWithTag("Player");
         target = targetGameObject.transform;
+        playerController = targetGameObject.GetComponent<PlayerController>();
 
 
         //currentTime = startingTime;
@@ -131,18 +139,31 @@ public class FollowPlayer : MonoBehaviour
         }
     }
 
-    //public void Damage(float amount)
-    //{
-    //    Debug.Log(amount + "Damage");
-    //    Destroy(gameObject);
-    //}
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject == targetGameObject)
+        {
+            Attack();
+
+            
+        }
+    }
 
 
-    //public void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.collider.CompareTag("Player"))
-    //    {
-    //        Destroy(gameObject); //Så den ikke følger efter en hele tiden
-    //    }
-    //}
+    private void Attack()
+    {
+        playerController.TakeDamage(damage);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+
+        if (hp < 1)
+        {
+            playerController.GetComponent<Level>().AddExperience(experience_reward);
+            Destroy(gameObject);
+        }
+    }
+
 }

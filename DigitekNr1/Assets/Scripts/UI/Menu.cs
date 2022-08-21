@@ -9,71 +9,79 @@ using TMPro;
 
 public class Menu : MonoBehaviour
 {
-    //Til point
+    [Header("Point")]
     //Henter den specielle Tekst pakke.
     public TextMeshProUGUI scoreText;
-    //Til den nuværende score
-    [HideInInspector]
-    public int currentScore;
+    [HideInInspector] public int currentScore;
 
-    //Til timeren
-    bool timerActive = false;
-    float currentTime = 0;
+    [Header("Timer")]
+    //bool timerActive = false;
+    //float currentTime = 0;
     public TextMeshProUGUI timerLabel;
 
-    //Til liv
+
+    [Header("Life")]
     public TextMeshProUGUI lifeText;
     [SerializeField] int currentLife = 100;
 
 
+    [Header("Level")]
+    [SerializeField] GameObject EXPBar;
+    [SerializeField] TextMeshProUGUI levelText;
+
+    private Slider slider;
+
+    [Header("Music")]
     [SerializeField] private AudioMixer audioMixer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Hvis brugeren ikke har rørt ved volume, så spiller musikken med fuld kraft.
-        //Ellers loader den deres settings.
-        if (!PlayerPrefs.HasKey("musicVolume"))
-        {
-            PlayerPrefs.SetFloat("musicVolume", 1);
-            Load();
-        }
-        else
-        {
-            Load();
-        }
-    }
-
-    #region OptionMenu
-    public void SetVolume(float volume)
-    {
-        //Dramatisk går fra -60DB til -40DB, dog kan mennesket ikke hører under -40DB så det går:)
-        audioMixer.SetFloat("Volume", Mathf.Log10(volume) * 20);
-    }
-
-    //For at kunne finde vores slider
     [SerializeField] Slider volumeSlider;
 
-
-    public void ChangeVolume()
+    private void Awake()
     {
-        //Sætter volume til valuen på slideren og laver en save.
-        AudioListener.volume = volumeSlider.value;
-        Save();
+        slider = EXPBar.GetComponent<Slider>();
     }
 
-    private void Load()
-    {
-        //Sætter den lig med hvad vi har gemt
-        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
-    }
+    //void Start()
+    //{
 
-    private void Save()
-    {
-        //Sætter value fra slider ind i vores key name
-        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
-    }
-    #endregion
+    //    //Hvis brugeren ikke har rørt ved volume, så spiller musikken med fuld kraft.
+    //    //Ellers loader den deres settings.
+    //    if (!PlayerPrefs.HasKey("musicVolume"))
+    //    {
+    //        PlayerPrefs.SetFloat("musicVolume", 1);
+    //        Load();
+    //    }
+    //    else
+    //    {
+    //        Load();
+    //    }
+    //}
+
+    //#region OptionMenu
+    //public void SetVolume(float volume)
+    //{
+    //    //Dramatisk går fra -60DB til -40DB, dog kan mennesket ikke hører under -40DB så det går:)
+    //    audioMixer.SetFloat("Volume", Mathf.Log10(volume) * 20);
+    //}
+
+    //public void ChangeVolume()
+    //{
+    //    //Sætter volume til valuen på slideren og laver en save.
+    //    AudioListener.volume = volumeSlider.value;
+    //    Save();
+    //}
+
+    //private void Load()
+    //{
+    //    //Sætter den lig med hvad vi har gemt
+    //    volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    //}
+
+    //private void Save()
+    //{
+    //    //Sætter value fra slider ind i vores key name
+    //    PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+    //}
+    //#endregion
 
     #region MainMenu
     public void PlayGame()
@@ -87,7 +95,6 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
     #endregion
-
 
     #region Update
 
@@ -112,5 +119,16 @@ public class Menu : MonoBehaviour
         lifeText.text = " Life : " + currentLife.ToString();
     }
     #endregion
+
+    public void UpDateExperienceSlider(int current, int target)
+    {
+        slider.maxValue = target;
+        slider.value = current;
+    }
+
+    public void SetLevelText(int level)
+    {
+        levelText.text = "Level : " + level.ToString();
+    }
 
 }
