@@ -159,7 +159,7 @@ public class FollowPlayer : MonoBehaviour, IDamageAble
     {
         hp -= damage;
 
-        if (hp < 1)
+        if (hp <= 0)
         {
             playerController.GetComponent<Level>().AddExperience(experience_reward);
             Destroy(gameObject);

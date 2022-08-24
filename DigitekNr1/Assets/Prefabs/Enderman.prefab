@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 5249810253933658551}
   - component: {fileID: 5249810253933658544}
   - component: {fileID: 5249810253933658550}
+  - component: {fileID: 6509682021865782910}
   m_Layer: 0
   m_Name: Enderman
   m_TagString: Untagged
@@ -155,6 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyGFX: {fileID: 5249810253786124930}
+  hp: 1
+  damage: 1
+  experience_reward: 400
   activateDistance: 20
   speed: 130
   nextWaypointDistance: 1
@@ -248,3 +252,26 @@ MonoBehaviour:
   version: 1
   unwrap: 1
   splitAtEveryPortal: 0
+--- !u!114 &6509682021865782910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249810253933658540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b090bec917bbe4c3bbc612ef13f7c4a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  useRaycasting: 1
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  thickRaycast: 0
+  thickRaycastRadius: 0
+  use2DPhysics: 1
+  raycastOffset: {x: 0, y: 0, z: 0}
+  useGraphRaycasting: 0
+  quality: 2

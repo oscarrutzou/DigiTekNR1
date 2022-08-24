@@ -21,9 +21,19 @@ public class Spawner : MonoBehaviour
     private float maxPosY;
 
 
+    [SerializeField] float activateDistance = 10f;
+    private GameObject targetGameObject;
+    private PlayerController playerController;
+    private Transform target;
+
+
+
     private void Awake()
     {
+        targetGameObject = GameObject.FindWithTag("Player");
+        playerController = targetGameObject.GetComponent<PlayerController>();
 
+        target = targetGameObject.transform;
 
         minPosX = pos1.GetComponentInChildren<Transform>().position.x;
         maxPosX = pos2.GetComponentInChildren<Transform>().position.x;
@@ -37,21 +47,22 @@ public class Spawner : MonoBehaviour
 
     }
 
-
+    //Ikke update.
     private void Start()
     {
+        if (TargetInDistance())
+        {
+            StartCoroutine(Spawn());
+        }
+        else if (!TargetInDistance())
+        {
+            StopCoroutine(Spawn());
+        }
         
+    }
 
-
-
-        //Starter med at spawne.
-        StartCoroutine(Spawn());
-
-        //if (//Can see player)
-        //{
-            //Start spawning
-        //}
-
+    private void Update()
+    {
 
     }
 
@@ -84,6 +95,9 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    //Reference til monster script til at finde om spawneren kan se spilleren
-    //Husk at tag transform af spawneren
+
+    private bool TargetInDistance()
+    {
+        return Vector2.Distance(transform.position, target.position) < activateDistance;
+    }
 }
