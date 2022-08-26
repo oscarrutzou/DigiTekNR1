@@ -5,7 +5,7 @@ using Pathfinding;
 
 
 
-public class HellSpinner : MonoBehaviour
+public class HellSpinner : MonoBehaviour, IDamageAble
 {
     public Transform target;
 
@@ -24,8 +24,8 @@ public class HellSpinner : MonoBehaviour
 
     #region Oscar
     [SerializeField] float activateDistance = 10f;
-    private GameObject targetGameObject;
-    private PlayerController playerController;
+    public GameObject targetGameObject;
+    public PlayerController playerController;
 
     [SerializeField] int experience_reward = 400;
     #endregion
@@ -45,12 +45,6 @@ public class HellSpinner : MonoBehaviour
     void Start()
     {
         SetAttackVector();
-    }
-
-
-    private void Update()
-    {
-        
     }
 
 
@@ -98,11 +92,12 @@ public class HellSpinner : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
         Debug.Log("I'm triggerd");
-        /*PlayerMovement player = hitInfo.GetComponent<PlayerMovement>();
-        if (hitInfo.gameObject.tag == "Player" && player != null)
+
+        if (hitInfo.gameObject == targetGameObject)
         {
-            player.TakeDamage(damage)
-        }*/
+            Debug.Log("HellSpinner damage to player");
+            Attack();
+        }
     }
 
     public void TakeDamage(int damage)
@@ -131,23 +126,15 @@ public class HellSpinner : MonoBehaviour
 
     #region Oscar
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private bool TargetInDistance()
     {
-        if (collision.gameObject == targetGameObject)
-        {
-            Debug.Log("HellSpinner damage to player");
-            Attack();
-        }
+        return Vector2.Distance(transform.position, target.position) < activateDistance;
     }
 
     private void Attack()
     {
         playerController.TakeDamage(damage);
-    }
-
-    private bool TargetInDistance()
-    {
-        return Vector2.Distance(transform.position, target.position) < activateDistance;
     }
 
     #endregion

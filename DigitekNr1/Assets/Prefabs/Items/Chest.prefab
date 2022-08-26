@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1286488300805617843}
   - component: {fileID: 619851729641474831}
   - component: {fileID: 619851729641474830}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chest
   m_TagString: Obstacles
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4213917117230463980}
   - component: {fileID: 6424859544661398515}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chest GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
